@@ -16,11 +16,35 @@ public partial class Taxpayer
         }
         Email = email;
         Name = name;
+        Amount = 0;
     }
 
     public string? Email { get => _email; set => _email = value; }
 
     public string? Name { get; set; }
 
-    public int? Amount { get; set; }
+    public int? Amount { get => _amount; set => _amount = (int)value; }
+
+    public void IncreaseTaxCredit(int amount)
+    {
+        if(amount < 0)
+        {
+            throw new ArgumentException("Az összeg nem lehet negatív");
+        }
+        Amount += amount;
+    }
+
+    public void DecreaseTaxCredit(int amount)
+    {
+        if (amount < 0)
+        {
+            throw new ArgumentException("Az összeg nem lehet pozitív");
+        }
+        Amount += amount;
+    }
+
+    public override string ToString()
+    {
+        return $"Név: {Name}, Email: {Email}, Adójóváírás: {Amount} Ft";
+    }
 }
