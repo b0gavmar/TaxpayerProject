@@ -1,0 +1,7 @@
+email,name,amount
+gabor.kovacs@gmail.com,Kovács Gábor,15000
+maria.szabo@gmail.com,Szabó Mária,18000
+istvan.toth@yahoo.com,Tóth István,12000
+erzsebet.nagy@gmail.com,Nagy Erzsébet,20000
+laszlo.kis@yahoo.com,Kis László,17500
+agnes.horvath@gmail.com,Horváth Ágnes,16000
