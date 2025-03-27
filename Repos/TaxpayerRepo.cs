@@ -34,7 +34,7 @@ namespace TaxpayerProject.Repos
 
         public async Task<List<Taxpayer>> GetAllWithEmailDomain(string domain)
         {
-            return await _context.Taxpayers.Where(t => t.Email.Contains("@gmail.com")).ToListAsync();
+            return await _context.Taxpayers.Where(t => t.Email.Contains(domain)).ToListAsync();
         }
 
         public async Task<int> GetNumberOfTaxpayers()
