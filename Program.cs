@@ -50,3 +50,21 @@ foreach (var item in await repo.GetLowestAndHighest())
 {
     Console.WriteLine(item+"; ");
 }
+Console.WriteLine("\n7.");
+await repo.ChangeAmount("erzsebet.nagy@gmail.com", 2000);
+foreach (var item in await repo.GetAll())
+{
+    Console.WriteLine(item);
+}
+Console.WriteLine("\n8.");
+await repo.AddNew("uj ubul", "uj.ubul@ubul.hu", 1000);
+foreach (var item in await repo.GetAll())
+{
+    Console.WriteLine(item);
+}
+Console.WriteLine("\n9.");
+await repo.Remove("uj.ubul@ubul.hu");
+foreach (var item in await repo.GetAll())
+{
+    Console.WriteLine(item);
+}
