@@ -41,5 +41,68 @@ namespace TaxpayerProject.Repos
         {
             return await _context.Taxpayers.CountAsync();
         }
+
+        public async Task<List<int>> GetLowestAndHighest()
+        {
+            var lowest = await _context.Taxpayers.OrderBy(t => t.Amount).FirstOrDefaultAsync();
+            var highest = await _context.Taxpayers.OrderByDescending(t => t.Amount).FirstOrDefaultAsync();
+
+            var lowestHighest = new List<int>();
+            lowestHighest.Add((int)lowest.Amount);
+            lowestHighest.Add((int)highest.Amount);
+
+            return lowestHighest;
+        }
+
+        public async Task ChangeAmount(string email,int amount)
+        {
+            var payer = await _context.Taxpayers.FirstOrDefaultAsync(t => t.Email == email);
+            if(payer == null)
+            {
+                throw new ArgumentException("Nincs ilyen email című adózó");
+            }
+            if (amount < 0)
+            {
+                payer.DecreaseTaxCredit(amount);
+            }
+            else
+            {
+                payer.IncreaseTaxCredit(amount);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddNew(string name, string email, int amount)
+        {
+            if(await _context.Taxpayers.AnyAsync(t => t.Email == email))
+            {
+                throw new ArgumentException("Már van ilyen email című adózó");
+            }
+            var payer = new Taxpayer(name, email);
+            if(amount < 0)
+            {
+                payer.DecreaseTaxCredit(amount);
+            }
+            else
+            {
+                payer.IncreaseTaxCredit(amount);
+            }
+            _context.Taxpayers.Add(payer);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Remove(string email)
+        {
+            if (!await _context.Taxpayers.AnyAsync(t => t.Email == email))
+            {
+                throw new ArgumentException("Nincs ilyen email című adózó");
+            }
+            var payer = await _context.Taxpayers.FirstOrDefaultAsync(t => t.Email == email);
+
+            _context.Remove(payer);
+
+            await _context.SaveChangesAsync();
+        }
     }
 }
