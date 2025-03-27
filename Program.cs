@@ -43,3 +43,10 @@ foreach (var item in await repo.GetAllWithEmailDomain("@gmail.com"))
     Console.WriteLine(item);
 }
 Console.WriteLine("\n5.");
+Console.WriteLine($"Adózók száma: {repo.GetNumberOfTaxpayers()}");
+Console.WriteLine("\n6.");
+Console.WriteLine("A legnagyobb és legkissebb összeg: ");
+foreach (var item in await repo.GetLowestAndHighest())
+{
+    Console.WriteLine(item+"; ");
+}
